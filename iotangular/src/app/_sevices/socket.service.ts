@@ -9,8 +9,8 @@ export class SocketService {
   private socket: SocketIOClient.Socket;
   private messages: Array<any>;
   constructor() {
-    this.connect();
-    this.getMessage();
+    //this.connect();
+   // this.getMessage();
   }
 
   public connect(){

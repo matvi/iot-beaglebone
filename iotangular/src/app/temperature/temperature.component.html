@@ -1,7 +1,16 @@
 
-Temperature <mat-form-field> <input matInput placeholder=""/></mat-form-field>
-<br />
-Humedity <mat-form-field> <input matInput placeholder=""/></mat-form-field>
+<mat-card>
+    <p> Temperature: <span>{{temperature}}</span></p>
+    <mat-card-footer [style.backgroundColor]="color">.</mat-card-footer>
+</mat-card>
 
+<br> 
+
+<mat-card>
+    <!--p> Humedity: <span [style.color]="color">{{humidity}}</span></p> -->
+    <p> Humedity: <span>{{humidity}}</span></p>
+    <mat-card-footer [style.backgroundColor]="color">.</mat-card-footer>
+</mat-card>
 
 <button mat-button (click) = "sendmessage()">Send message flaskio</button>
+
