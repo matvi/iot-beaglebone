@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,7 @@ import { Observable } from 'rxjs';
 export class SocketService {
   private socket: SocketIOClient.Socket;
   private messages: Array<any>;
-  constructor() {
-    //this.connect();
-   // this.getMessage();
-  }
+  constructor(private http: HttpClient) {}
 
   public connect(){
     this.socket = io('http://localhost:5000'); 
@@ -24,6 +22,13 @@ export class SocketService {
     this.socket.on('data-tmp', (data) => {
       console.log(data);
     });
+  }
+
+  public iniServerSocket(){
+    this.http.get('http://10.42.0.19:5000/api/socket')
+    .subscribe(data => {
+      console.log(data);
+    })
   }
 
 }

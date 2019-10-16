@@ -21,11 +21,11 @@ export class TemperatureComponent implements OnInit {
   ngOnInit() {
     this.connect();
     this.setReceiveMethod();
-    //this.sendmessage();
+    this.socket.iniServerSocket();
   }
 
   connect(){
-    this.socketio = io('http://localhost:5000');
+    this.socketio = io('http://10.42.0.19:5000');
   }
 
   setReceiveMethod() {
@@ -39,6 +39,7 @@ export class TemperatureComponent implements OnInit {
 
   sendmessage() {
     this.socketio.emit('new-message', 'Hi-flask');
+    
   }
 
   getTempColor(temperature: number) {
