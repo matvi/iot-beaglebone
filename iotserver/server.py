@@ -9,16 +9,19 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, cors_allowed_origins='*')
 thread = None
+clients = 0
 
 def ini_socket():
+    global clients,thread
     b = bbb.Beagle()
-    while True:
-        print('Sending data from WebSocket')       
+    while clients > 0:
+        print('Sending data from WebSocket, numClientes: {0}'.format(clients))       
         b.GetTemperature()
         print('sending Data: temp: {0}, hum: {1}'.format(b.temperature,b.humidity))
         #socketio.emit('data-tmp', {'temperature': 10, 'humedity':10})
         socketio.emit('data-tmp', {'temperature': b.temperature, 'humedity':b.humidity})
         time.sleep(1)
+    thread = None #we restore the thread so it can be used again
 
 @app.route('/api/socket')
 def index():
@@ -31,9 +34,9 @@ def index():
         
 @socketio.on('connect')
 def test_connect():
+    global clients
+    clients += 1
     print('Client connected test')
-    #send_data()
-
 
 #Read data from client
 @socketio.on('new-message')
@@ -53,6 +56,8 @@ def send_data():
 
 @socketio.on('disconnect')
 def test_disconnect():
+    global clients
+    clients -= 1
     print('Client disconnected')
 
 
